@@ -1,5 +1,5 @@
 import ibis
-import pickle
+import dill as pickle
 
 @ibis.udf.scalar.python()
 def add_one(x: int) -> int:
@@ -8,4 +8,6 @@ def add_one(x: int) -> int:
 if __name__ == '__main__':
     t = ibis.examples.penguins.fetch()
     t2 = t.select(year=add_one(t.year))
-    b = pickle.dumps(t2)
+    b = pickle.dumps(t)
+    t3 = pickle.loads(b)
+    t3.execute()
